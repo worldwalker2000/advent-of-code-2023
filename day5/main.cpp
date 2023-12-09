@@ -15,7 +15,8 @@ struct Map
 
 int main()
 {
-    std::fstream file("sample.txt");
+    // std::fstream file("sample.txt");
+    std::fstream file("input.txt");
 
     std::vector<long> seeds;
 
@@ -213,7 +214,7 @@ int main()
         {
             if (!(value >= map.src && value < map.src+map.len)) return false;
             mapped = map.dst+value-map.src;
-            std::cout << "mapping " << value << " -> " << mapped << std::endl;
+            // std::cout << "mapping " << value << " -> " << mapped << std::endl;
             return true;
         };
 
@@ -225,10 +226,10 @@ int main()
         for (long i = 0; i < seeds.size(); i+=2)
         // for (long i = 0; i < seeds.size(); i++)
         {
-            // for (long seed = seeds[i]; seed < seeds[i] + seeds[i+1]; seed++)
+            for (long seed = seeds[i]; seed < seeds[i] + seeds[i+1]; seed++)
             {
-                // long result = seed;
-                long result = seeds[i];
+                long result = seed;
+                // long result = seeds[i];
 
                 for (const Map& map : seedToSoil) if (ApplyMap(result, map, result)) break;
                 // std::cout << result << std::endl;
@@ -245,12 +246,14 @@ int main()
                 for (const Map& map : humidityToLocation) if (ApplyMap(result, map, result)) break;
                 // std::cout << result << std::endl;
 
-                // if (result < min) min = result;
-                std::cout << seeds[i] << " -> " << result << std::endl;
+                if (result < min) min = result;
+                // std::cout << seeds[i] << " -> " << result << std::endl;
             }
+
+            std::cout << "pair" << std::endl;
         }
 
-        // std::cout << min << std::endl;
+        std::cout << min << std::endl;
     }
 
     return 0;
